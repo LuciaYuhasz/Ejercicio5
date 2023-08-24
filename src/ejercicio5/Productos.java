@@ -5,17 +5,24 @@
  */
 package ejercicio5;
 
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author Usuario
  */
 public class Productos extends javax.swing.JFrame {
+    
+    private DefaultTableModel modelo =new DefaultTableModel();
+    
 
     /**
      * Creates new form Productos
      */
     public Productos() {
         initComponents();
+        armarCabecera();
     }
 
     /**
@@ -65,6 +72,11 @@ public class Productos extends javax.swing.JFrame {
         jScrollPane1.setViewportView(jtProductos);
 
         jbAgregar.setText("AGREGAR PRODUCTO");
+        jbAgregar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbAgregarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -126,6 +138,37 @@ public class Productos extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void jbAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbAgregarActionPerformed
+        String categoria= (String)jcCategorias.getSelectedItem();
+        String nombre=jtNombre.getText();
+        
+        double precio=0;
+        try{
+        
+         precio=Double.parseDouble( jtPrecio.getText());
+        } catch(NumberFormatException ex){
+            JOptionPane.showMessageDialog(this,"Error, ingrese un numero valido");
+            return ;
+            
+        }
+        
+        if((!nombre.equals(""))&&(precio >0)){
+            
+            
+    
+        
+        Object arr[]={ categoria,nombre, precio};
+        modelo.addRow(arr);
+        }else{
+            JOptionPane.showMessageDialog(this, "error, debe ingresar datos");
+        }
+        
+        jtNombre.setText("");
+        jtPrecio.setText("");
+        
+        
+    }//GEN-LAST:event_jbAgregarActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -173,4 +216,12 @@ public class Productos extends javax.swing.JFrame {
     private javax.swing.JTextField jtPrecio;
     private javax.swing.JTable jtProductos;
     // End of variables declaration//GEN-END:variables
+
+private void armarCabecera(){
+    modelo.addColumn("Nombre");
+     modelo.addColumn("Nombre");
+      modelo.addColumn("Nombre");
+      jtProductos.setModel(modelo);
+    
+}
 }
